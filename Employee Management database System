@@ -1,0 +1,74 @@
+CREATE DATABASE:
+------------------------
+create database employee_database;
+
+CREATE EMPLOYEE TABLE :
+-------------------------
+create table emp (
+id number(1) primary key,                                                      
+name varchar(20) not null,
+role varchar(15) not null,
+salary number(6),
+Manager_id number(1) not null,
+hiredate date,
+deptno number(2) not null);
+
+ALTER THE TABLE :
+-------------------
+alter table emp
+add phone_no number(10) check(length(phone_no)=10)
+
+INSERT THE RECORDS :
+---------------------
+insert into emp values (&id,&name,&role,&salary,&MANAGER_ID,&hiredate,&deptno,&phone_no);
+ 
+ID          NAME                  ROLE              SALARY   MANAGER_ID  HIREDATE      DEPTNO   PHONE_NO
+---------- -------------------- --------------- ---------- ----------    --------- ---------- ----------
+         1 SMITH                JAVA                 25000          4    22-JAN-24         10  9566967731
+         2 ADAMS                SQL DEVELOPER        20000          4    05-DEC-24         20  9555623167
+         3 JONES                QA                   18000          4    12-MAR-24         20  9445567890
+         4 BLAKE                TEAM LEAD            40000          8    20-MAR-24         30  9556584123
+         5 CLARK                BA                   30000          8    15-APR-24         30  9334661298
+         8 MILLER               FOUNDER             100000          8    25-DEC-24         40  9994467890
+
+CREATE DEPARTMENT TABLE :
+--------------------------
+create table dept(
+    deptno number(2) primary key,
+    dept_name varchar(20),
+    location varchar(20),
+    shift varchar(5) check(shift = 'DAY' or shift = 'NIGHT')
+);
+INSERT THE RECORDS:
+--------------------
+insert into dept values (&deptno, &dept_name, &location, &shift);
+
+    DEPTNO DEPT_NAME            LOCATION             SHIFT
+---------- -------------------- -------------------- -----
+        10 SOFTWARE             CHENNAI              NIGHT
+        20 ANALYST              BANGALORE            DAY
+        30 PROJECT MAINTAIN     KERALA               NIGHT
+        40 COUNCIL BOARD        COIMBATORE
+
+ADD THE RELATION BETWEEN THE TABLES:
+-----------------------------------
+alter table emp
+add constraint emp_f
+foreign key (deptno)
+references dept(deptno);
+
+JOIN USING NATURAL JOIN:
+-----------------------
+select * from emp natural join dept;
+
+
+    DEPTNO         ID NAME                 ROLE                SALARY MANAGER_ID HIREDATE    PHONE_NO DEPT_NAME            LOCATION             SHIFT
+---------- ---------- -------------------- --------------- ---------- ---------- --------- ---------- -------------------- -------------------- -----
+        10          1 SMITH                JAVA                 25000          4 22-JAN-24 9566967731 SOFTWARE             CHENNAI              NIGHT
+        20          2 ADAMS                SQL DEVELOPER        20000          4 05-DEC-24 9555623167 ANALYST              BANGALORE            DAY
+        20          3 JONES                QA                   18000          4 12-MAR-24 9445567890 ANALYST              BANGALORE            DAY
+        30          4 BLAKE                TEAM LEAD            40000          8 20-MAR-24 9556584123 PROJECT MAINTAIN     KERALA               NIGHT
+        30          5 CLARK                BA                   30000          8 15-APR-24 9334661298 PROJECT MAINTAIN     KERALA               NIGHT
+        40          8 MILLER               FOUNDER             100000          8 25-DEC-24 9994467890 COUNCIL BOARD        COIMBATORE
+
+
